@@ -6,6 +6,7 @@ import Navbar from '../components/Navbar';
 import ProductsList from '../components/ProductsList';
 import UpdateProduct from '../components/UpdateProduct';
 import './Home.css';
+import Spinner from '../components/Spinner';
 
 const Home = () => {
   const [productList, setProductList] = useState([]);
@@ -14,6 +15,7 @@ const Home = () => {
   const [productToUpdate, setProductToUpdate] = useState({});
   const [addingNewProduct, setAddingNewProduct] = useState(false);
   const [showPopUp, setShowPopUp] = useState(false);
+  const [loading, setLoading] = useState(false);
   //Call getAllProducts function on page render
   useEffect(() => {
     getAllProducts();
@@ -21,10 +23,13 @@ const Home = () => {
   //Request to get all products
   const getAllProducts = async () => {
     try {
+      setLoading(true);
       const { data } = await axios.get('/api/products');
       const sortedArray = data.reverse();
       setProductList(sortedArray);
+      setLoading(false);
     } catch (error) {
+      setLoading(false);
       console.log(error);
     }
   };
@@ -113,6 +118,10 @@ const Home = () => {
     }
   };
 
+  if (loading) {
+    return <Spinner />;
+  }
+
   return (
     <Layout>
       <div className="home-container">
@@ -139,13 +148,17 @@ const Home = () => {
             </button>
           </form>
         )}
-        <ProductsList
-          productList={productList}
-          removeProduct={removeProduct}
-          productToUpdate={(product) => setProductToUpdate(product)}
-          updateQuantity={updateQuantity}
-          togglePopUp={togglePopUp}
-        />
+        {productList.length ? (
+          <ProductsList
+            productList={productList}
+            removeProduct={removeProduct}
+            productToUpdate={(product) => setProductToUpdate(product)}
+            updateQuantity={updateQuantity}
+            togglePopUp={togglePopUp}
+          />
+        ) : (
+          <h2 className="empty-list">No cookies in the jar</h2>
+        )}
       </div>
       {showPopUp && (
         <UpdateProduct

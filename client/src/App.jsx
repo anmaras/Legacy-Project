@@ -15,7 +15,6 @@ const App = () => {
           style: { fontSize: '1.2rem' },
         }}
       ></Toaster>
-
       <Routes>
         <Route element={<PrivateRoutes />}>
           <Route path="/" element={<Home />} />
