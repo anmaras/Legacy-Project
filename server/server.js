@@ -33,14 +33,14 @@ app.use((error, req, res, next) => {
 
 mongoose.set('strictQuery', false);
 
-if (process.env.NODE_ENV === 'production') {
-  // console.log(path.resolve('../client/dist'));
-  app.use(express.static('../client/dist'));
+// if (process.env.NODE_ENV === 'production') {
+//   // console.log(path.resolve('../client/dist'));
+//   app.use(express.static('../client/dist'));
 
-  app.get('*', (req, res) => {
-    res.sendFile(path.resolve('../client', 'dist', 'index.html'));
-  });
-}
+//   app.get('*', (req, res) => {
+//     res.sendFile(path.resolve('../client', 'dist', 'index.html'));
+//   });
+// }
 
 // Connection to database:
 const connectDB = async () => {

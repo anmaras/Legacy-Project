@@ -5,11 +5,11 @@
   "main": "./server/server.js",
   "type": "module",
   "scripts": {
-    "setup-production": "npm run install-dev && npm run install-client && npm run build-client && npm run install-server",
+    "setup-production": "npm run install-client && npm run build-client && npm run install-server",
+    "install-dev": "cd ./client && npm install --omit=dev",
     "install-client": "cd ./client && npm install",
     "build-client": "cd ./client && npm run build",
     "install-server": "cd ./server && npm install",
-    "install-dev": "cd ./client && npm install --omit=dev",
     "start": "cd ./server && node server.js"
   },
   "keywords": [],
