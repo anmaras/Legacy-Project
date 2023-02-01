@@ -15,7 +15,7 @@ const SignUp = () => {
     };
     //Creating a new user
     try {
-      await axios.post('http://localhost:8000/api/auth/signUp', user);
+      await axios.post('/api/auth/signUp', user);
       toast.success('Sign up Successful!');
       //Clearing out the inputs
       e.target.name.value = '';
