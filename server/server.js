@@ -7,9 +7,10 @@ import morgan from 'morgan';
 import cookieParser from 'cookie-parser';
 import allRoutes from './routes/routes.js';
 import error from './utils/createError.js';
+import path from 'path';
+const app = express();
 
 const PORT = process.env.PORT || 8000;
-const app = express();
 
 // Adding middlewares
 app.use(bodyParser.json());
@@ -17,7 +18,7 @@ app.use(cors());
 app.use(morgan('tiny'));
 app.use(express.json());
 app.use(cookieParser());
-app.use(express.static('client/dist'));
+// app.use(express.static('client/dist'));
 
 // All routes with an '/api' prefix
 app.use('/api', allRoutes);
@@ -31,6 +32,15 @@ app.use((error, req, res, next) => {
 });
 
 mongoose.set('strictQuery', false);
+
+if (process.env.NODE_ENV === 'production') {
+  // console.log(path.resolve('../client/dist'));
+  app.use(express.static('../client/dist'));
+
+  app.get('*', (req, res) => {
+    res.sendFile(path.resolve('../client', 'dist', 'index.html'));
+  });
+}
 
 // Connection to database:
 const connectDB = async () => {
