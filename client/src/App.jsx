@@ -3,7 +3,7 @@ import { Toaster } from 'react-hot-toast';
 import { Routes, Route } from 'react-router-dom';
 import Home from './pages/Home';
 import AuthSignup from './pages/AuthSignup';
-import AuthSignin from './pages/authSignin';
+import AuthSignin from './pages/AuthSignin';
 import PrivateRoutes from './components/PrivateRoutes';
 
 const App = () => {
